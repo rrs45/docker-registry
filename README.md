@@ -26,9 +26,12 @@ docker tag vrops:v1 <<HOSTNAME>>:5001/vrops
 docker push <<HOSTNAME>>:5001/vrops
 
 #List images from private registry
-curl -user 'xxx:xxx' --X GET https://<<HOSTNAME>>:5001/v2/_catalog
+curl --user 'xxx:xxx' -X GET https://<<HOSTNAME>>:5001/v2/_catalog
 curl --user 'xxx:xxx' -X GET https://<<HOSTNAME>>:5001/v2/<<IMAGE_NAME>>/tags/list
 curl --user 'xxx:xxx' -X GET https://<<HOSTNAME>>:5001/v2/<<IMAGE_NAME>>/manifests/latest
+
+#Delete image
+curl --user 'xxx:xxx' -X DELETE https://<<HOSTNAME>>:5001/v1/repositories/<<IMAGE_NAME>>/tags/latest
   
 #Kubernetes integration
 kubectl create secret docker-registry regsecret --docker-server=<<HOSTNAME>>:5001 --docker-username=xxxxx --docker-password=xxxxxx --docker-email=xxxxxx
