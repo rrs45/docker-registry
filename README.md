@@ -30,8 +30,11 @@ curl --user 'xxx:xxx' -X GET https://<<HOSTNAME>>:5001/v2/_catalog
 curl --user 'xxx:xxx' -X GET https://<<HOSTNAME>>:5001/v2/<<IMAGE_NAME>>/tags/list
 curl --user 'xxx:xxx' -X GET https://<<HOSTNAME>>:5001/v2/<<IMAGE_NAME>>/manifests/latest
 
-#Delete image
-curl --user 'xxx:xxx' -X DELETE https://<<HOSTNAME>>:5001/v1/repositories/<<IMAGE_NAME>>/tags/latest
+#GET image digest
+curl -v --user 'xxx:xxx'  --silent -H "Accept: application/vnd.docker.distribution.manifest.v2+json" -X GET  https://<<HOSTNAME>>:5001/v2/logstash-6.2/manifests/latest 2>&1 | grep Docker-Content-Digest | awk '{print $3}'
+	
+#Delete images with given digest
+curl --user 'xxx:xxxx'  -H "Accept: application/vnd.docker.distribution.manifest.v2+json" -X DELETE https://<<HOSTNAME>>:5001/v2/logstash-6.2/manifests/sha256:xxx....	
   
 #Kubernetes integration
 kubectl create secret docker-registry regsecret --docker-server=<<HOSTNAME>>:5001 --docker-username=xxxxx --docker-password=xxxxxx --docker-email=xxxxxx
